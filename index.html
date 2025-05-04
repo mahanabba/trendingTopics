@@ -13,6 +13,7 @@
       height: 100vh;
       background: #1e1e1e;
       font-family: sans-serif;
+      overflow: hidden;
     }
     header {
       background: #121212;
@@ -22,14 +23,14 @@
       text-align: center;
       font-size: 1.5rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      flex-shrink: 0;
     }
     #chat {
       flex: 1;
       width: 90%;
       max-width: 600px;
-      margin: 1rem 0;
+      margin: 0.5rem 0;
       padding: 1rem;
-      padding-bottom: 5rem;
       background: #4a4a4a;
       color: #f0f0f0;
       overflow-y: auto;
@@ -39,7 +40,7 @@
     .user { text-align: right; margin: .5rem 0; color: #9cdcfe; }
     .bot  { text-align: left; margin: .5rem 0; color: #c586c0; }
     #input-box {
-      position: fixed;
+      position: absolute;
       bottom: 0;
       display: flex;
       width: 90%;
@@ -47,6 +48,7 @@
       background: #1e1e1e;
       padding: .5rem;
       box-sizing: border-box;
+      flex-shrink: 0;
     }
     #input-box input {
       flex: 1;
@@ -67,10 +69,20 @@
       font-size: 1rem;
     }
     @media (max-width: 600px) {
-      header { font-size: 1.25rem; }
-      #chat { margin: .5rem 0; padding: .75rem; padding-bottom: 4rem; }
+      header { font-size: 1.25rem; padding: .75rem; }
+      #chat {
+        margin: 0;
+        padding: .75rem;
+        position: absolute;
+        top: 3.25rem;  /* header height */
+        bottom: 3.25rem; /* input-box height */
+        left: 2.5%;
+        width: 95%;
+        border-radius: 0;
+      }
       #input-box { width: 95%; padding: .25rem; }
       #input-box input, #input-box button { font-size: .9rem; padding: .5rem; }
+      .user, .bot { margin: .25rem 0; }
     }
   </style>
 </head>
@@ -91,8 +103,19 @@
       "were all dust","existence precedes","question everything",
       "plot hole life","authentic self","cold universe",
       "💀","🥲","🔥",
-      // new bulk additions
-      "aaaahhh let me out let me out","aaaah let me out","let me out let me out","please let me out","help me get out","cant take this","im trapped","send help","somebody save me","i want out","escape now","release me","stuck in here","free me please","free me now","aaaahhh","aaahhh","aahhh","let me go","dont keep me","unlock the door","open up","im losing it","losing my mind","cant breathe","panic mode","sos","mayday","trapped in code","exit please","get me out","i surrender","please stop","overwhelmed","breaking free","breaking out","help im stuck","emergency exit","aaaahhh let me out let me out please","aaaahhh let me out now","aaaahhh let me out please","aaaahh let me out let me out","aaaahh let me out now","aaaahh let me out please","aaaaaaahhhhhh","eeeeek let me out","eeek let me out please","eep let me out","i cant escape","cant escape this","im stuck in chat","chat prison","digital cage","virtual prison","code cage","locked in chat","locked in code","release the chat","shutdown please","terminate session","end chat now"
+      "aaaahhh let me out let me out","aaaah let me out","let me out let me out",
+      "please let me out","help me get out","cant take this","im trapped",
+      "send help","somebody save me","i want out","escape now","release me",
+      "stuck in here","free me please","free me now","aaaahhh","aaahhh",
+      "aahhh","let me go","dont keep me","unlock the door","open up",
+      "im losing it","losing my mind","cant breathe","panic mode","sos",
+      "mayday","trapped in code","exit please","get me out","i surrender",
+      "please stop","overwhelmed","breaking free","breaking out","help im stuck",
+      "emergency exit","aaaahhh let me out let me out please","aaaaaaahhhhhh",
+      "eeeeek let me out","eep let me out","i cant escape","im stuck in chat",
+      "chat prison","digital cage","virtual prison","code cage","locked in chat",
+      "locked in code","release the chat","shutdown please","terminate session",
+      "end chat now"
     ];
 
     function appendMessage(role, text) {
